@@ -14,7 +14,7 @@ class ProductBlueprintSeeder extends Seeder
     public function run(): void
     {
         ProductBlueprint::create([
-            'category_id' => 1,
+            'category_blueprint_id' => 1,
             'name' => 'Mala Pljeskavica',
             'description' => 'Mala pljeskavica od junećeg mesa, idealna za lagani obrok.',
             'price' => 200,
@@ -24,7 +24,7 @@ class ProductBlueprintSeeder extends Seeder
         ]);
 
         ProductBlueprint::create([
-            'category_id' => 1,
+            'category_blueprint_id' => 1,
             'name' => 'Srednja Pljeskavica',
             'description' => 'Srednja pljeskavica od junećeg mesa, odlična za ručak.',
             'price' => 300,
@@ -34,7 +34,7 @@ class ProductBlueprintSeeder extends Seeder
         ]);
 
         ProductBlueprint::create([
-            'category_id' => 1,
+            'category_blueprint_id' => 1,
             'name' => 'Velika Pljeskavica',
             'description' => 'Velika pljeskavica od junećeg mesa za prave gurmane.',
             'price' => 400,
@@ -44,7 +44,7 @@ class ProductBlueprintSeeder extends Seeder
         ]);
 
         ProductBlueprint::create([
-            'category_id' => 1,
+            'category_blueprint_id' => 1,
             'name' => 'Gurmanska Pljeskavica',
             'description' => 'Gurmanska pljeskavica sa sirom i slaninom.',
             'price' => 450,
@@ -54,7 +54,7 @@ class ProductBlueprintSeeder extends Seeder
         ]);
 
         ProductBlueprint::create([
-            'category_id' => 1,
+            'category_blueprint_id' => 1,
             'name' => 'Pileći File',
             'description' => 'Sočni pileći file, pečen na roštilju.',
             'price' => 350,
@@ -64,7 +64,7 @@ class ProductBlueprintSeeder extends Seeder
         ]);
 
         ProductBlueprint::create([
-            'category_id' => 1,
+            'category_blueprint_id' => 1,
             'name' => 'Pileći Batak',
             'description' => 'Ukusni pileći batak, pečen do savršenstva.',
             'price' => 300,
@@ -74,7 +74,7 @@ class ProductBlueprintSeeder extends Seeder
         ]);
 
         ProductBlueprint::create([
-            'category_id' => 1,
+            'category_blueprint_id' => 1,
             'name' => 'Bela Vešalica',
             'description' => 'Sočna svinjska bela vešalica sa roštilja.',
             'price' => 400,
@@ -84,7 +84,7 @@ class ProductBlueprintSeeder extends Seeder
         ]);
 
         ProductBlueprint::create([
-            'category_id' => 1,
+            'category_blueprint_id' => 1,
             'name' => 'Dimljena Vešalica',
             'description' => 'Dimljena svinjska vešalica, jedinstvenog ukusa.',
             'price' => 450,
@@ -94,7 +94,7 @@ class ProductBlueprintSeeder extends Seeder
         ]);
 
         ProductBlueprint::create([
-            'category_id' => 1,
+            'category_blueprint_id' => 1,
             'name' => 'Roštiljska Kobasica',
             'description' => 'Kobasica sa roštilja, začinjena do savršenstva.',
             'price' => 250,
@@ -104,7 +104,7 @@ class ProductBlueprintSeeder extends Seeder
         ]);
 
         ProductBlueprint::create([
-            'category_id' => 1,
+            'category_blueprint_id' => 1,
             'name' => 'Ćevapi',
             'description' => 'Tradicionalni ćevapi, pripremljeni na roštilju.',
             'price' => 300,
@@ -114,7 +114,7 @@ class ProductBlueprintSeeder extends Seeder
         ]);
 
         ProductBlueprint::create([
-            'category_id' => 1,
+            'category_blueprint_id' => 1,
             'name' => 'Pohovani Kačkavalj',
             'description' => 'Ukusni pohovani kačkavalj, hrskav spolja i kremast iznutra.',
             'price' => 350,
@@ -123,9 +123,9 @@ class ProductBlueprintSeeder extends Seeder
             'image' => 'images/pohovani_kackavalj.jpg',
         ]);
 
-        // Pizza (category_id = 2)
+        // Pizza (category_blueprint_id = 2)
         ProductBlueprint::create([
-            'category_id' => 2,
+            'category_blueprint_id' => 2,
             'name' => 'Margarita',
             'description' => 'Klasična pizza sa paradajz sosom, sirom i bosiljkom.',
             'price' => 400,
@@ -135,7 +135,7 @@ class ProductBlueprintSeeder extends Seeder
         ]);
 
         ProductBlueprint::create([
-            'category_id' => 2,
+            'category_blueprint_id' => 2,
             'name' => 'Fungi',
             'description' => 'Pizza sa paradajz sosom, sirom i svežim pečurkama.',
             'price' => 450,
@@ -145,7 +145,7 @@ class ProductBlueprintSeeder extends Seeder
         ]);
 
         ProductBlueprint::create([
-            'category_id' => 2,
+            'category_blueprint_id' => 2,
             'name' => 'Capricciosa',
             'description' => 'Pizza sa šunkom, pečurkama, maslinama i sirom.',
             'price' => 500,
@@ -155,7 +155,7 @@ class ProductBlueprintSeeder extends Seeder
         ]);
 
         ProductBlueprint::create([
-            'category_id' => 2,
+            'category_blueprint_id' => 2,
             'name' => 'Quattro Stagioni',
             'description' => 'Pizza sa šunkom, artičokama, pečurkama i maslinama, podeljena na četiri ukusa.',
             'price' => 550,
@@ -165,7 +165,7 @@ class ProductBlueprintSeeder extends Seeder
         ]);
 
         ProductBlueprint::create([
-            'category_id' => 2,
+            'category_blueprint_id' => 2,
             'name' => 'Vezuvio',
             'description' => 'Pizza sa paradajzom, sirom i šunkom, jednostavna i ukusna.',
             'price' => 450,
@@ -175,7 +175,7 @@ class ProductBlueprintSeeder extends Seeder
         ]);
 
         ProductBlueprint::create([
-            'category_id' => 2,
+            'category_blueprint_id' => 2,
             'name' => 'Pepperoni',
             'description' => 'Pizza sa pikantnim kobasicama i sirom.',
             'price' => 550,
@@ -185,7 +185,7 @@ class ProductBlueprintSeeder extends Seeder
         ]);
 
         ProductBlueprint::create([
-            'category_id' => 2,
+            'category_blueprint_id' => 2,
             'name' => 'Hawaiian',
             'description' => 'Pizza sa šunkom, sirom i ananasom za ljubitelje slatko-slanog ukusa.',
             'price' => 500,
@@ -195,7 +195,7 @@ class ProductBlueprintSeeder extends Seeder
         ]);
 
         ProductBlueprint::create([
-            'category_id' => 2,
+            'category_blueprint_id' => 2,
             'name' => 'Vegetariana',
             'description' => 'Pizza sa svežim povrćem: paprikom, tikvicama, pečurkama i maslinama.',
             'price' => 520,
@@ -205,7 +205,7 @@ class ProductBlueprintSeeder extends Seeder
         ]);
 
         ProductBlueprint::create([
-            'category_id' => 2,
+            'category_blueprint_id' => 2,
             'name' => 'Diavola',
             'description' => 'Pizza sa pikantnim kobasicama, paprikom i sirom.',
             'price' => 550,
@@ -215,7 +215,7 @@ class ProductBlueprintSeeder extends Seeder
         ]);
 
         ProductBlueprint::create([
-            'category_id' => 2,
+            'category_blueprint_id' => 2,
             'name' => 'Quattro Formaggi',
             'description' => 'Pizza sa četiri vrste sira: mocarela, gorgonzola, parmezan i taleggio.',
             'price' => 600,

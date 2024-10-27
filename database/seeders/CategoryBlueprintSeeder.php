@@ -2,24 +2,24 @@
 
 namespace Database\Seeders;
 
-use App\Models\Category;
+use App\Models\CategoryBlueprint;
 use Illuminate\Database\Seeder;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
-class CategorySeeder extends Seeder
+class CategoryBlueprintSeeder extends Seeder
 {
     /**
      * Run the database seeds.
      */
     public function run(): void
     {
-        Category::create(
+        CategoryBlueprint::create(
             ['name' => 'Rostilj'],
         );
-        Category::create(
+        CategoryBlueprint::create(
             ['name' => 'Pizza'],
         );
-        Category::create(
+        CategoryBlueprint::create(
             ['name' => 'Drinks'],
         );
     }
