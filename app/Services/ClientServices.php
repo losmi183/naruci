@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Models\Company;
+use App\Models\CategoryBlueprint;
 use App\Repository\ClientRepository;
 
 class ClientServices {
@@ -15,6 +16,17 @@ class ClientServices {
     public function register(array $data): Company
     {
         return $this->clientRepository->create($data);
+    }
+    public function initializeClientData(array $data)
+    {
+        foreach ($data['selected_categories'] as $id) {
+            $category_blueprint = CategoryBlueprint::find($id);
+            Category::create([
+                // 'company_id' => $data['company_id'],
+                'name' => $category_blueprint->name,
+                'description' => $category_blueprint->description,
+            ]);            
+        }
     }
 
 }

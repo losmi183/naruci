@@ -11,4 +11,5 @@ Route::get('/user', function (Request $request) {
 Route::group(['prefix' => 'client'], function () {
 
     Route::post('/register', [ClientController::class, 'register']);
+    Route::post('/initialize-client-data', [ClientController::class, 'initializeClientData']);
 });

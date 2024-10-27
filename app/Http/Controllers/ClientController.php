@@ -3,10 +3,11 @@
 namespace App\Http\Controllers;
 
 use Exception;
-use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use App\Services\ClientServices;
+use Illuminate\Http\JsonResponse;
 use App\Http\Requests\ClientRegisterRequest;
+use App\Http\Requests\InitializeClientRequest;
 
 class ClientController extends Controller
 {
@@ -28,5 +29,12 @@ class ClientController extends Controller
                 'error' => $e->getMessage()
             ] ,  $e->getCode() ?: 500);
         }
+    }
+
+    public function initializeClientData(InitializeClientRequest $request): JsonResponse
+    {
+        $data = $request->validated();
+        $result = $this->clientServices->initializeClientData($data);
+        return response()->json($result , 201);
     }
 }
