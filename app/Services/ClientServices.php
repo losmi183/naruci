@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Models\Company;
+use App\Models\Category;
 use App\Models\CategoryBlueprint;
 use App\Repository\ClientRepository;
 
