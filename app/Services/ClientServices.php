@@ -7,7 +7,7 @@ use App\Models\Category;
 use App\Models\ProductBlueprint;
 use App\Models\AdditionBlueprint;
 use App\Models\CategoryBlueprint;
-use App\Repository\ClientRepository;
+use App\Repository\companyRepository;
 use App\Repository\ProductRepository;
 use App\Repository\AdditionRepository;
 use App\Repository\CategoryRepository;
@@ -17,22 +17,23 @@ class ClientServices {
     private CategoryRepository $categoryRepository;
     private ProductRepository $productRepository;
     private AdditionRepository $additionRepository;
-    private ClientRepository $clientRepository;
+    private CompanyRepository $companyRepository;
 
     public function __construct(
         CategoryRepository $categoryRepository,
         ProductRepository $productRepository,
         AdditionRepository $additionRepository,
-        ClientRepository $clientRepository) 
+        CompanyRepository $companyRepository,
+    ) 
     {
         $this->categoryRepository = $categoryRepository;
         $this->productRepository = $productRepository;
         $this->additionRepository = $additionRepository;
-        $this->clientRepository = $clientRepository;        
+        $this->companyRepository = $companyRepository;        
     }
     public function register(array $data): Company
     {
-        return $this->clientRepository->create($data);
+        return $this->companyRepository->create($data);
     }
     public function initializeClientData(array $data): bool
     {
