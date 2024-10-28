@@ -34,7 +34,13 @@ class ClientController extends Controller
     public function initializeClientData(InitializeClientRequest $request): JsonResponse
     {
         $data = $request->validated();
-        $result = $this->clientServices->initializeClientData($data);
-        return response()->json($result , 201);
+        try {
+            $result = $this->clientServices->initializeClientData($data);
+            return response()->json('Success creating from blueprints' , 200);
+        } catch (\Throwable $e) {
+            return response()->json([
+                'error' => 'Error on creating from blueprints'
+            ] ,  $e->getCode() ?: 500);
+        }
     }
 }

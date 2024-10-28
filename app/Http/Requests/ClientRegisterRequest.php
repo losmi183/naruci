@@ -28,7 +28,7 @@ class ClientRegisterRequest extends FormRequest
             'pib' => 'required|digits:9',
             'country' => 'required|integer|exists:countries,id',
             'city' => 'required|integer|exists:cities,id',
-            'Address' => 'required|string|max:255',
+            'address' => 'required|string|max:255',
         ];
     }
 

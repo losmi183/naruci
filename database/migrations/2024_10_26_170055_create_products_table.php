@@ -14,8 +14,11 @@ return new class extends Migration
         Schema::create('products', function (Blueprint $table) {
             $table->id();
 
-            $table->unsignedBigInteger('category_id')->nullable();
-            $table->foreign('category_id')->references('id')->on('categories')->onUpdate('cascade')->onDelete('cascade');
+            $table->unsignedBigInteger('company_id');
+            $table->foreign('company_id')->references('id')->on('companies')->onUpdate('cascade')->onDelete('cascade');
+
+            $table->unsignedBigInteger('category_blueprint_id')->nullable();
+            $table->foreign('category_blueprint_id')->references('id')->on('category_blueprints')->onUpdate('cascade')->onDelete('cascade');
 
             $table->string('name')->nullable();
             $table->string('description')->nullable();
@@ -25,9 +28,6 @@ return new class extends Migration
             $table->integer('grams')->nullable();
 
             $table->string('image')->nullable();
-
-            $table->unsignedBigInteger('company_id');
-            $table->foreign('company_id')->references('id')->on('companies')->onUpdate('cascade')->onDelete('cascade');
 
             $table->timestamps();
         });
