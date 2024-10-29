@@ -82,4 +82,9 @@ class AuthController extends Controller
         }
     }
 
+    public function whoami(): JsonResponse
+    {
+        return response()->json($this->authServices->whoami());
+    }
+
 }

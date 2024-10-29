@@ -52,17 +52,8 @@ class AuthServices
         throw new \Exception(__('auth.failed'), 401);
     }
 
-    // public function whoami(): User
-    // {
-    //     $user = $this->userService->loggedUser();
-    //     //$user->pusher = $this->pusherServices->clientConfig($user);
-    //     return $user;
-    // }
-
-    // public function refresh(): \stdClass
-    // {
-    //     $user = $this->jwtService->getContent();
-
-    //     return $this->jwtService->setPair($user, 60);
-    // }
+    public function whoami(): array
+    {
+        return $this->jwtService->getContent();
+    }
 }

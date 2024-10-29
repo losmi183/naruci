@@ -11,6 +11,7 @@ Route::group(['prefix' => 'auth'], function () {
     Route::post('/register', [AuthController::class, 'register']);
     Route::post('/logout', [AuthController::class, 'logout']);
     Route::post('/refresh-token', [AuthController::class, 'refreshToken']);
+    Route::get('/whoami', [AuthController::class, 'whoami'])->middleware([JwtMiddleware::class]);
 });
 
 Route::group(['middleware' => [JwtMiddleware::class], 'prefix' => 'client'], function () {
