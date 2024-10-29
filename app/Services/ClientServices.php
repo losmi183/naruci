@@ -31,26 +31,26 @@ class ClientServices {
         $this->additionRepository = $additionRepository;
         $this->companyRepository = $companyRepository;        
     }
-    public function register(array $data): Company
+    public function createCompany(array $data): Company
     {
-        return $this->companyRepository->create($data);
+        return $this->companyRepository->store($data);
     }
     public function initializeClientData(array $data): bool
     {
         foreach ($data['selected_categories'] as $id) {
             $category_blueprint = CategoryBlueprint::find($id);
             $category_blueprint->company_id = $data['company_id'];
-            $this->categoryRepository->create($category_blueprint);
+            $this->categoryRepository->store($category_blueprint);
         }
         foreach ($data['selected_products'] as $id) {
             $product_blueprint = ProductBlueprint::find($id);
             $product_blueprint->company_id = $data['company_id'];
-            $this->productRepository->create($product_blueprint);
+            $this->productRepository->store($product_blueprint);
         }
         foreach ($data['selected_additions'] as $id) {
             $addition_blueprint = AdditionBlueprint::find($id);
             $addition_blueprint->company_id = $data['company_id'];
-            $this->additionRepository->create($addition_blueprint);
+            $this->additionRepository->store($addition_blueprint);
         }
         return true;
     }

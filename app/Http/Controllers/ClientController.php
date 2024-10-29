@@ -8,6 +8,7 @@ use App\Services\ClientServices;
 use Illuminate\Http\JsonResponse;
 use App\Http\Requests\ClientRegisterRequest;
 use App\Http\Requests\InitializeClientRequest;
+use App\Http\Requests\ClientCreateCompanyRequest;
 
 class ClientController extends Controller
 {
@@ -17,12 +18,12 @@ class ClientController extends Controller
         $this->clientServices = $clientServices;
     }
 
-    public function register(ClientRegisterRequest $request): JsonResponse
+    public function createCompany(ClientCreateCompanyRequest $request): JsonResponse
     {
         $data = $request->validated();
 
         try {
-            $result = $this->clientServices->register($data);
+            $result = $this->clientServices->createCompany($data);
             return response()->json($result , 201);
         } catch (Exception $e) {
             return response()->json([

@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Log;
 
 class CompanyRepository {
 
-    public function create(array $data): Company
+    public function store(array $data): Company
     {
         try {
             $company = Company::create($data);

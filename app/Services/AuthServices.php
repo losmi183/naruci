@@ -33,25 +33,36 @@ class AuthServices
 
         // Check password match and set token
         if($user && Hash::check($data['password'], $user->password)) {
-
-            $pair = $this->jwtService->setPair($user->toArray());
-            return $pair;
+            $result = $this->jwtService->setPair($user->toArray());
+            // $pair->company = $user->company;
+            return $result;
         }
-
-        abort(response()->json(['errors' => __('auth.failed')], 401));
+        throw new \Exception(__('auth.failed'), 401);
     }
 
-    public function whoami(): User
+    public function refreshToken(string $refreshToken): \stdClass
     {
-        $user = $this->userService->loggedUser();
-        //$user->pusher = $this->pusherServices->clientConfig($user);
-        return $user;
+        $status =$this->jwtService->decodeJWT($refreshToken);
+        if($status) {
+            $user = $this->jwtService->getContent();
+            $result = $this->jwtService->setPair($user, 60);
+            // $pair->company = $user->company;
+            return $result;
+        }
+        throw new \Exception(__('auth.failed'), 401);
     }
 
-    public function refresh(): \stdClass
-    {
-        $user = $this->jwtService->getContent();
+    // public function whoami(): User
+    // {
+    //     $user = $this->userService->loggedUser();
+    //     //$user->pusher = $this->pusherServices->clientConfig($user);
+    //     return $user;
+    // }
 
-        return $this->jwtService->setPair($user, 60);
-    }
+    // public function refresh(): \stdClass
+    // {
+    //     $user = $this->jwtService->getContent();
+
+    //     return $this->jwtService->setPair($user, 60);
+    // }
 }

@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Log;
 
 class ProductRepository {
 
-    public function create(ProductBlueprint $data): Product
+    public function store(ProductBlueprint $data): Product
     {
         try {
             $product = Product::create($data->toArray());

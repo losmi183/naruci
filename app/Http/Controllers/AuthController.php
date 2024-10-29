@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Js;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Services\JWTServices;
@@ -19,6 +20,7 @@ use App\Repositories\UserRepository;
 use Illuminate\Support\Facades\Mail;
 
 use App\Http\Requests\RegisterRequest;
+use App\Http\Requests\RefreshTokenRequest;
 use App\Http\Requests\PasswordRecoveryRequest;
 use Symfony\Component\HttpFoundation\Response;
 use App\Http\Requests\PasswordRecoveryUpdateRequest;
@@ -52,7 +54,7 @@ class AuthController extends Controller
         $data = $request->validated();
 
         try {
-            $result = $this->authServices->register($data);
+            $result = $this->authServices->register($data['token']);
             return response()->json($result, 201);
         } catch (\Throwable $th) {
             return response()->json([
@@ -60,6 +62,24 @@ class AuthController extends Controller
             ], $th->getCode() ?: 500);
         }
 
+    }
+
+    public function logout(): JsonResponse
+    {
+        return response()->json(['message' => __('auth.logged out')], 200);
+    }
+
+    public function refreshToken(RefreshTokenRequest $request): JsonResponse
+    {
+        $data = $request->validated();
+        try {
+            $result = $this->authServices->refreshToken($data['token']);
+            return response()->json($result, 200);
+        } catch (\Throwable $th) {
+            return response()->json([
+                'error' => $th->getMessage()
+            ], $th->getCode() ?: 500);
+        }
     }
 
 }

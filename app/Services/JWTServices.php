@@ -27,7 +27,7 @@ class JWTServices
         $this->key = $key;
     }
 
-    public function setPair(array $data, ?int $ttl=null): \stdClass
+    public function setPair(array $user, ?int $ttl=null): \stdClass
     {
         $obj = new \stdClass;
         
@@ -37,11 +37,11 @@ class JWTServices
             // $jwt_time_to_live = config('settings.JWT2LIVEMIN');
             $jwt_time_to_live = config('auth.jwt_token_expiration');
         }
-        $obj->token = $this->createJWT($data, $jwt_time_to_live);
+        $obj->token = $this->createJWT($user, $jwt_time_to_live);
         // $jwt_refresh_t2l = config('settings.JWT2RFSHMIN');
         $jwt_refresh_t2l = config('auth.jwt_refresh_token_expiration');
-        $obj->refresh_token = $this->createJWT($data, $jwt_refresh_t2l);
-        // $obj->token_ttl_min = $ttl;
+        $obj->refresh_token = $this->createJWT($user, $jwt_refresh_t2l);
+        $obj->user = $user;
 
         return $obj;
     }

@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Log;
 
 class CategoryRepository {
 
-    public function create(CategoryBlueprint $data): Category
+    public function store(CategoryBlueprint $data): Category
     {
         try {
             $category = Category::create($data->toArray());

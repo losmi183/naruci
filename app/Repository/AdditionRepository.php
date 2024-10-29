@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Log;
 
 class AdditionRepository {
 
-    public function create(AdditionBlueprint $data): Addition
+    public function store(AdditionBlueprint $data): Addition
     {
         try {
             $addition = Addition::create($data->toArray());
