@@ -2,6 +2,10 @@
 
 return [
 
-    'roles' => ['admin', 'client', 'user']
+    'roles' => [
+        'admin' => 1, 
+        'client' => 2, 
+        'user' => 3
+    ],
 
 ];

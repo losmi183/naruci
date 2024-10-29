@@ -18,6 +18,7 @@ use Illuminate\Support\Facades\Log;
 use App\Repositories\UserRepository;
 use Illuminate\Support\Facades\Mail;
 
+use App\Http\Requests\RegisterRequest;
 use App\Http\Requests\PasswordRecoveryRequest;
 use Symfony\Component\HttpFoundation\Response;
 use App\Http\Requests\PasswordRecoveryUpdateRequest;
@@ -32,16 +33,33 @@ class AuthController extends Controller
         $this->authServices = $authServices;
     }
 
-    public function login(Request $request): JsonResponse 
+    public function login(LoginRequest $request): JsonResponse 
     {
-        $data = $request->validate([
-            'email' => 'required|email|',
-            'password' => 'required|string',
-        ]);
+        $data = $request->validated();
 
-        $result = $this->authServices->login($data);
+        try {
+            $result = $this->authServices->login($data);
+            return response()->json($result, 201);
+        } catch (\Throwable $th) {
+            return response()->json([
+                'error' => $th->getMessage()
+            ], $th->getCode() ?: 500);
+        }
+    }
 
-        return response()->json($result);
-    } 
+    public function register(RegisterRequest $request): JsonResponse
+    {
+        $data = $request->validated();
+
+        try {
+            $result = $this->authServices->register($data);
+            return response()->json($result, 201);
+        } catch (\Throwable $th) {
+            return response()->json([
+                'error' => $th->getMessage()
+            ], $th->getCode() ?: 500);
+        }
+
+    }
 
 }

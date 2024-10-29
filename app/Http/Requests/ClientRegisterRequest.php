@@ -4,6 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Contracts\Validation\Validator;
+use Illuminate\Http\Exceptions\HttpResponseException;
 
 class ClientRegisterRequest extends FormRequest
 {
@@ -32,14 +33,20 @@ class ClientRegisterRequest extends FormRequest
         ];
     }
 
-    
-    /**
-     * @param Validator $validator
+/**
+     * Override the failedValidation method to return JSON response.
      *
+     * @param Validator $validator
      * @return void
+     * @throws HttpResponseException
      */
-    public function failedValidation(Validator $validator): void
+    protected function failedValidation(Validator $validator): void
     {
-        abort(418, $validator->errors());
+        throw new HttpResponseException(
+            response()->json([
+                'message' => 'Validation failed',
+                'errors' => $validator->errors()
+            ], 418)
+        );
     }
 }

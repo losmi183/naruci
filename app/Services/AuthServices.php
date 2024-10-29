@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Models\User;
 use App\Repository\UserRepository;
 use Illuminate\Support\Facades\Hash;
 
@@ -17,10 +18,13 @@ class AuthServices
     }
 
     
-    // public function register(array $data): User
-    // {
-    //     return $this->userRepository->store($data);
-    // }
+    public function register(array $data): User
+    {
+        if(isset($data['business']) && $data['business'] === true) {
+            $data['role_id'] = config('business.roles.client');
+        }
+        return $this->userRepository->store($data);
+    }
 
     public function login(array $data): \stdClass
     {

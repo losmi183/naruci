@@ -14,7 +14,8 @@ class RoleSeeder extends Seeder
     {
         foreach (config('business.roles') as $key => $value) {
             \App\Models\Role::create([
-                'name' => $value
+                'id' => $value,
+                'name' => $key
             ]);
         }
     }
