@@ -16,6 +16,10 @@ Route::group(['prefix' => 'auth'], function () {
 
 Route::group(['middleware' => [JwtMiddleware::class], 'prefix' => 'client'], function () {
 
+
+
+    Route::get('/get-company', [ClientController::class, 'getCompany']);
+
     Route::post('/create-company', [ClientController::class, 'createCompany']);
     Route::post('/initialize-client-data', [ClientController::class, 'initializeClientData']);
 });

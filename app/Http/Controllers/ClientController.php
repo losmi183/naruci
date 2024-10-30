@@ -18,6 +18,11 @@ class ClientController extends Controller
         $this->clientServices = $clientServices;
     }
 
+    public function getCompany(): JsonResponse
+    {
+        return response()->json(\DB::table('companies')->where('id', 1)->first() , 200);
+    }
+
     public function createCompany(ClientCreateCompanyRequest $request): JsonResponse
     {
         $data = $request->validated();
