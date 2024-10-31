@@ -2,6 +2,8 @@
 
 namespace App\Services;
 
+use Exception;
+use App\Models\User;
 use App\Models\Company;
 use App\Models\Category;
 use App\Models\ProductBlueprint;
@@ -12,7 +14,7 @@ use App\Repository\ProductRepository;
 use App\Repository\AdditionRepository;
 use App\Repository\CategoryRepository;
 
-class ClientServices {
+class CompanyServices {
 
     private CategoryRepository $categoryRepository;
     private ProductRepository $productRepository;
@@ -31,25 +33,37 @@ class ClientServices {
         $this->additionRepository = $additionRepository;
         $this->companyRepository = $companyRepository;        
     }
-    
-    public function initializeClientData(array $data): bool
+
+    public function show(array $user): Company
     {
-        foreach ($data['selected_categories'] as $id) {
-            $category_blueprint = CategoryBlueprint::find($id);
-            $category_blueprint->company_id = $data['company_id'];
-            $this->categoryRepository->store($category_blueprint);
-        }
-        foreach ($data['selected_products'] as $id) {
-            $product_blueprint = ProductBlueprint::find($id);
-            $product_blueprint->company_id = $data['company_id'];
-            $this->productRepository->store($product_blueprint);
-        }
-        foreach ($data['selected_additions'] as $id) {
-            $addition_blueprint = AdditionBlueprint::find($id);
-            $addition_blueprint->company_id = $data['company_id'];
-            $this->additionRepository->store($addition_blueprint);
-        }
-        return true;
+        $company = $this->companyRepository->show($user);
+
+        return $company;    
     }
 
+    public function store(array $user, array $data): Company
+    {
+        $data['user_id'] = $user['id'];
+
+        if($this->companyRepository->userCompany($user['id'])) {
+            abort(400, __("custom.user already has a company"));
+        }
+
+        $company = $this->companyRepository->store( $data);
+        try {
+            User::where('id', $user['id'])
+            ->update([
+                'company_id' => $company->id,
+                'role_id' => config('business.roles.owner'),
+            ]);
+        } catch (\Throwable $th) {
+            throw new Exception($th->getMessage(), 500);
+        }
+        return $company;
+    }
+
+    public function delete(int $company_id): bool
+    {
+        return $this->companyRepository->delete($company_id);
+    }
 }

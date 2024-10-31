@@ -13,13 +13,15 @@ return new class extends Migration
     {
         Schema::create('companies', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('user_id')->nullable();
-            $table->foreign('user_id')->references('id')->on('users')->onUpdate('set null')->onDelete('set null');    
+            // $table->unsignedBigInteger('user_id')->nullable();
+            // $table->foreign('user_id')->references('id')->on('users')->onUpdate('set null')->onDelete('set null');    
             $table->string('name');
             $table->string('description')->nullable();
             $table->integer('pib')->nullable();
-            $table->unsignedBigInteger('country')->nullable();
-            $table->unsignedBigInteger('city')->nullable();
+            $table->unsignedBigInteger('country_id')->nullable();
+            $table->foreign('country_id')->references('id')->on('countries')->onUpdate('set null')->onDelete('set null');
+            $table->unsignedBigInteger('city_id')->nullable();
+            $table->foreign('city_id')->references('id')->on('cities')->onUpdate('set null')->onDelete('set null');
             $table->string('address')->nullable();
             $table->timestamps();
         });

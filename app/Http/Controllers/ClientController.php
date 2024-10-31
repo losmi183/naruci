@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Services\CompanyServices;
 use Exception;
 use Illuminate\Http\Request;
 use App\Services\ClientServices;
@@ -16,25 +17,6 @@ class ClientController extends Controller
     public function __construct(ClientServices $clientServices)
     {
         $this->clientServices = $clientServices;
-    }
-
-    public function getCompany(): JsonResponse
-    {
-        return response()->json(\DB::table('companies')->where('id', 1)->first() , 200);
-    }
-
-    public function createCompany(ClientCreateCompanyRequest $request): JsonResponse
-    {
-        $data = $request->validated();
-
-        try {
-            $result = $this->clientServices->createCompany($data);
-            return response()->json($result , 201);
-        } catch (Exception $e) {
-            return response()->json([
-                'error' => $e->getMessage()
-            ] ,  $e->getCode() ?: 500);
-        }
     }
 
     public function initializeClientData(InitializeClientRequest $request): JsonResponse

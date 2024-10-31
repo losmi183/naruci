@@ -14,10 +14,20 @@ class CompanySeeder extends Seeder
     public function run(): void
     {
         Company::create([
-            'name' => 'Stepin Vajat'
+            'name' => 'Stepin Vajat',
+            'description' => 'Rostilj na cumuru, tradicija kvalitet',
+            'pib' => '123456789',
+            'country_id' => 1,
+            'city_id' => 1,
+            'address' => 'Vojvode Stepe 1',
         ]);
         Company::create([
-            'name' => 'Toma leskovcanin'
+            'name' => 'Toma leskovcanin',
+            'description' => 'Rostilj na cumuru, leskovacki recept',
+            'pib' => '123456788',
+            'country_id' => 1,
+            'city_id' => 2,
+            'address' => 'Mite topalovica 1',
         ]);
         Company::create([
             'name' => 'Leskovac online'

@@ -15,21 +15,20 @@ class DatabaseSeeder extends Seeder
     {
 
         $this->call(RoleSeeder::class);
-        $this->call(UserSeeder::class);
         
         $this->call(CountrySeeder::class);
         $this->call(CitySeeder::class);
-
+        
         $this->call(CategoryBlueprintSeeder::class);
         $this->call(ProductBlueprintSeeder::class);
         $this->call(AdditionBlueprintSeeder::class);
-
+        
         
         $this->call(CompanySeeder::class);
         $this->call(ShopSeeder::class);
-        
-        $this->call(ShopSeeder::class);
-        
 
+        $this->call(UserSeeder::class);
+        
+        $this->call(ShopSeeder::class);     
     }
 }

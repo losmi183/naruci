@@ -17,7 +17,8 @@ return new class extends Migration
             $table->foreign('company_id')->references('id')->on('companies')->onUpdate('cascade')->onDelete('cascade');
             $table->string('name');
             $table->string('description')->nullable();
-            $table->string('city')->nullable();
+            $table->unsignedBigInteger('city_id')->nullable();
+            $table->foreign(columns: 'city_id')->references('id')->on('cities')->onUpdate('set null')->onDelete('set null');
             $table->string('address')->nullable();
             $table->timestamps();
         });
