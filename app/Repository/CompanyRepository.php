@@ -7,9 +7,9 @@ use Illuminate\Support\Facades\Log;
 
 class CompanyRepository {
 
-    public function show(array $user): Company
+    public function show(int $company_id): Company
     {
-        return Company::with(['shops', 'city', 'country'])->find($user['company_id']);
+        return Company::with(['shops', 'city', 'country'])->find($company_id);
 
         // $result = \DB::table('companies')
         // ->select(
@@ -36,17 +36,30 @@ class CompanyRepository {
         return $company;
     }
 
-    public function delete(int $company_id): bool
+    public function update(int $company_id, array $data): Company
     {
         try {
-           $result = Company::where( $company_id)
-            ->delete();
+            Company::where('id', $company_id)
+            ->update( $data);
+            $company = Company::find($company_id);
         } catch (\Throwable $th) {
             Log::error($th->getMessage());
-            throw new Exception($th->getMessage(), 400);            
+            throw new Exception($th->getMessage(), 500);            
         }
-        return $result;
+        return $company;
     }
+
+    // public function delete(int $company_id): bool
+    // {
+    //     try {
+    //        $result = Company::where( $company_id)
+    //         ->delete();
+    //     } catch (\Throwable $th) {
+    //         Log::error($th->getMessage());
+    //         throw new Exception($th->getMessage(), 400);            
+    //     }
+    //     return $result;
+    // }
 
     public function userCompany(int $user_id): ?\stdClass
     {

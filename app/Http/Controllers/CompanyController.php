@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Exception;
+use App\Models\Company;
 use Illuminate\Http\Request;
 use App\Services\UserServices;
 use App\Services\ClientServices;
@@ -27,14 +28,15 @@ class CompanyController extends Controller
 
     public function show(): JsonResponse
     {
-        $user = $this->userServices->getUser();
-        if($user['company_id'] == null) {
+        try {
+            $user = $this->userServices->getUser();        
+            $result = $this->companyServices->show($user);
+            return response()->json($result , 200);
+        } catch (\Throwable $th) {
             return response()->json([
-                'error' => __('custom.user dont have company')
-            ], 404);
+                'error' => $th->getMessage()
+            ], $th->getCode() ?: 500);
         }
-        $result = $this->companyServices->show($user);
-        return response()->json($result , 200);
     }
 
     public function store(ClientStoreCompanyRequest $request): JsonResponse
@@ -42,6 +44,13 @@ class CompanyController extends Controller
         $data = $request->validated();
         try {
             $user = $this->userServices->getUser();
+            $user_company = $this->companyServices->userCompany($user['id']);
+            if($user_company) {
+                return response()->json([
+                    'error' => __('custom.user already has a company')
+                ], 400);
+            }
+
             $result = $this->companyServices->store( $user,$data);
             return response()->json($result , 201);
         } catch (Exception $e) {
@@ -54,10 +63,22 @@ class CompanyController extends Controller
     public function update(ClientUpdateCompanyRequest $request, $company_id): JsonResponse
     {
         $data = $request->validated();
-
+        
         try {
-            $result = $this->companyServices->store(intval( $company_id), $data);
-            return response()->json($result , 200);
+            $user = $this->userServices->getUser();
+            $user_company = $this->companyServices->userCompany($user['id']);
+    
+            if($user_company->id != $company_id) {
+                return response()->json([
+                    'error' => __('custom.user dont have rights to update company')
+                ], 403);
+            } else if ($user['role_id'] != config('business.roles.owner')) {
+                return response()->json([
+                    'error' => __('custom.only owner can update company')
+                ], 400);
+            }
+            $result = $this->companyServices->update(intval(  $company_id), $data);
+            return response()->json( $result , 200);
         } catch (Exception $e) {
             return response()->json([
                 'error' => $e->getMessage()
@@ -66,9 +87,23 @@ class CompanyController extends Controller
     }
     public function delete($company_id): JsonResponse
     {
-        try {
-            $result = $this->companyServices->delete(intval($company_id));
-            return response()->json($result , 200);
+        try {            
+            $user = $this->userServices->getUser();
+            $user_company = $this->companyServices->userCompany($user['id']);
+    
+            if($user_company->id != $company_id) {
+                return response()->json([
+                    'error' => __('custom.user dont have rights to update company')
+                ], 403);
+            } else if ($user['role_id'] != config('business.roles.owner')) {
+                return response()->json([
+                    'error' => __('custom.only owner can update company')
+                ], 400);
+            }
+            
+            Company::where('id', $company_id)->delete();
+            // $result = $this->companyServices->delete(intval($company_id));
+            return response()->json(__('custom.company deleted') , 200);
         } catch (Exception $e) {
             return response()->json([
                 'error' => $e->getMessage()

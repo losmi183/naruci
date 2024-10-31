@@ -35,8 +35,12 @@ class CompanyServices {
     }
 
     public function show(array $user): Company
-    {
-        $company = $this->companyRepository->show($user);
+    {   
+        $company = $this->companyRepository->userCompany($user['id']);
+        if($company == null) {
+            throw new Exception(__('custom.user dont have company'), 404);
+        }
+        $company = $this->companyRepository->show($company->id);
 
         return $company;    
     }
@@ -44,11 +48,6 @@ class CompanyServices {
     public function store(array $user, array $data): Company
     {
         $data['user_id'] = $user['id'];
-
-        if($this->companyRepository->userCompany($user['id'])) {
-            abort(400, __("custom.user already has a company"));
-        }
-
         $company = $this->companyRepository->store( $data);
         try {
             User::where('id', $user['id'])
@@ -62,8 +61,19 @@ class CompanyServices {
         return $company;
     }
 
-    public function delete(int $company_id): bool
+    public function update(int $company_id, array $data): Company
     {
-        return $this->companyRepository->delete($company_id);
+        $company = $this->companyRepository->update($company_id, $data);     
+        return $company;
+    }
+
+    // public function delete(int $company_id): bool
+    // {
+        
+    // }
+
+    public function userCompany(int $user_id): ?\stdClass
+    {
+        return $this->companyRepository->userCompany($user_id);
     }
 }
