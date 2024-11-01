@@ -20,7 +20,7 @@ return new class extends Migration
             $table->foreign('role_id')->references('id')->on('roles');
 
             $table->unsignedBigInteger('company_id')->nullable();
-            $table->foreign('company_id')->references('id')->on('companies')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreign('company_id')->references('id')->on('companies')->onUpdate('set null')->onDelete('set null');
 
             $table->smallInteger('active')->default(1);
 

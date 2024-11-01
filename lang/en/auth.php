@@ -24,4 +24,10 @@ return [
     'expeired token' => 'Expeired token',
     'logged out' => 'Logged out',
 
+    'user dont have company' => 'User dont have company',
+    'user already has a company' => 'User already has a company',
+    'user dont have rights to update company' => 'User dont have rights to update company',
+    'only owner can update company' => 'Only owner can update company',
+    'user dont have rights to edit company data' => 'User dont have rights to edit company data',
+    'only owner can edit company data' => 'Only owner can edit company data',
 ];
