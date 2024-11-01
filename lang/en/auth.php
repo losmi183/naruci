@@ -29,5 +29,9 @@ return [
     'user dont have rights to update company' => 'User dont have rights to update company',
     'only owner can update company' => 'Only owner can update company',
     'user dont have rights to edit company data' => 'User dont have rights to edit company data',
+
+    'user dont have rights to view company data' => 'User dont have rights to view company data',
     'only owner can edit company data' => 'Only owner can edit company data',
+    'user dont have rights to delete company' => 'User dont have rights to delete company',
+    'only owner can delete company' => 'Only owner can delete company',
 ];

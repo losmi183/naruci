@@ -17,7 +17,7 @@ Route::group(['prefix' => 'auth'], function () {
 
 Route::group(['middleware' => [JwtMiddleware::class], 'prefix' => 'client'], function () {
 
-    Route::get('/company/show', [CompanyController::class, 'show']);
+    Route::get('/company/show/{company_id}', [CompanyController::class, 'show']);
     Route::post('/company/store', [CompanyController::class, 'store']);
     Route::patch('/company/update/{company_id}', [CompanyController::class, 'update']);
     Route::delete('/company/delete/{company_id}', [CompanyController::class, 'delete']);

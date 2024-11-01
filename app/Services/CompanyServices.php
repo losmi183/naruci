@@ -34,23 +34,18 @@ class CompanyServices {
         $this->companyRepository = $companyRepository;        
     }
 
-    public function show(array $user): Company
+    public function show(int $company_id): Company
     {   
-        $company = $this->companyRepository->userCompany($user['id']);
-        if($company == null) {
-            throw new Exception(__('custom.user dont have company'), 404);
-        }
-        $company = $this->companyRepository->show($company->id);
+        $company = $this->companyRepository->show( $company_id);
 
         return $company;    
     }
 
-    public function store(array $user, array $data): Company
+    public function store(int $user_id, array $data): Company
     {
-        $data['user_id'] = $user['id'];
         $company = $this->companyRepository->store( $data);
         try {
-            User::where('id', $user['id'])
+            User::where('id', $user_id)
             ->update([
                 'company_id' => $company->id,
                 'role_id' => config('business.roles.owner'),
@@ -65,15 +60,5 @@ class CompanyServices {
     {
         $company = $this->companyRepository->update($company_id, $data);     
         return $company;
-    }
-
-    // public function delete(int $company_id): bool
-    // {
-        
-    // }
-
-    public function userCompany(int $user_id): ?\stdClass
-    {
-        return $this->companyRepository->userCompany($user_id);
     }
 }
