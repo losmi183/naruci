@@ -34,4 +34,12 @@ return [
     'only owner can edit company data' => 'Only owner can edit company data',
     'user dont have rights to delete company' => 'User dont have rights to delete company',
     'only owner can delete company' => 'Only owner can delete company',
+
+    'user dont have rights to view shop data' => 'User dont have rights to view shop data',
+    'only owner can create shops' => 'Only owner can create shops',
+    'only owner can edit shop data' => 'Only owner can edit shop data',
+    'only owner can delete shop' => 'Only owner can delete shop',
+
+    'first create company then shop' => 'First create company then shop',
+
 ];

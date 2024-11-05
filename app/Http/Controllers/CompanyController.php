@@ -4,16 +4,11 @@ namespace App\Http\Controllers;
 
 use Exception;
 use App\Models\Company;
-use Illuminate\Http\Request;
 use App\Services\UserServices;
 use App\Policies\CompanyPolicy;
-use App\Services\ClientServices;
 use App\Services\CompanyServices;
 use Illuminate\Http\JsonResponse;
-use App\Http\Requests\ClientRegisterRequest;
-use App\Http\Requests\InitializeClientRequest;
 use App\Http\Requests\ClientStoreCompanyRequest;
-use App\Http\Requests\ClientCreateCompanyRequest;
 use App\Http\Requests\ClientUpdateCompanyRequest;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
@@ -24,21 +19,18 @@ class CompanyController extends Controller
     private CompanyServices $companyServices;
     private UserServices $userServices;
     private $user;
-    private $user_company;
     private CompanyPolicy $companyPolicy;
-    public function __construct(CompanyServices $companyServices, ClientServices $clientServices, UserServices $userServices, CompanyPolicy $companyPolicy)
+    public function __construct(CompanyServices $companyServices, UserServices $userServices, CompanyPolicy $companyPolicy)
     {
         $this->companyServices = $companyServices;
-        $this->clientServices = $clientServices;
         $this->userServices = $userServices;
         $this->companyPolicy = $companyPolicy;
+        $this->user = $this->userServices->userWithCompany();
     }
 
     public function show($company_id): JsonResponse
     {
-        $user = $this->userServices->userWithCompany();
-
-        $authorizationResponse = $this->companyPolicy->show($user, $company_id);
+        $authorizationResponse = $this->companyPolicy->show( $this->user, $company_id);
         if ($authorizationResponse->denied()) {
             return response()->json(['error' => $authorizationResponse->message()], 403);
         }
@@ -57,15 +49,13 @@ class CompanyController extends Controller
     {
         $data = $request->validated();
 
-        $user = $this->userServices->userWithCompany();
-
-        $authorizationResponse = $this->companyPolicy->store($user);
+        $authorizationResponse = $this->companyPolicy->store($this->user);
         if ($authorizationResponse->denied()) {
             return response()->json(['error' => $authorizationResponse->message()], 403);
         }
 
         try {
-            $result = $this->companyServices->store( intval($user->id), $data);
+            $result = $this->companyServices->store( intval($this->user->id), $data);
             return response()->json($result , 201);
         } catch (Exception $e) {
             return response()->json([
@@ -78,9 +68,7 @@ class CompanyController extends Controller
     {
         $data = $request->validated();
         
-        $user = $this->userServices->userWithCompany();
-
-        $authorizationResponse = $this->companyPolicy->update($user, $company_id);
+        $authorizationResponse = $this->companyPolicy->update($this->user, $company_id);
         if ($authorizationResponse->denied()) {
             return response()->json(['error' => $authorizationResponse->message()], 403);
         }
@@ -96,9 +84,7 @@ class CompanyController extends Controller
     }
     public function delete($company_id): JsonResponse
     {        
-        $user = $this->userServices->userWithCompany();
-
-        $authorizationResponse = $this->companyPolicy->delete($user, $company_id);
+        $authorizationResponse = $this->companyPolicy->delete($this->user, $company_id);
         if ($authorizationResponse->denied()) {
             return response()->json(['error' => $authorizationResponse->message()], 403);
         }
