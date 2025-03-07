@@ -31,6 +31,16 @@ class ClientServices {
         $this->additionRepository = $additionRepository;
         $this->companyRepository = $companyRepository;        
     }
+
+    public function dashboard(\Stdclass $user): \stdClass
+    {
+        $counts = new \stdClass();
+        $counts->shops = \DB::table('shops')->select('id')->where('company_id', $user->company_id)->count();
+        $counts->workers = \DB::table('users')->select('id')->where('company_id', $user->company_id)->count();
+        $counts->products = \DB::table('products')->select('id')->where('company_id', $user->company_id)->count();
+        $counts->orders = \DB::table('orders')->select('id')->whereIn('shop_id',  $user->shop_ids)->count();
+        return $counts;
+    }
     
     public function initializeClientData(array $data): bool
     {

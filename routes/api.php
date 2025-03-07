@@ -18,6 +18,8 @@ Route::group(['prefix' => 'auth'], function () {
 
 Route::group(['middleware' => [JwtMiddleware::class], 'prefix' => 'client'], function () {
 
+    Route::get('/dashboard', [ClientController::class, 'dashboard']);
+
     Route::get('/company/show/{company_id}', [CompanyController::class, 'show']);
     Route::post('/company/store', [CompanyController::class, 'store']);
     Route::patch('/company/update/{company_id}', [CompanyController::class, 'update']);
